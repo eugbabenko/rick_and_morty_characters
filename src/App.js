@@ -1,35 +1,17 @@
-import { useState, useEffect } from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import './App.scss';
 
-import getCharactersList from './API/index';
-import BASE_URL from './settings';
-import CardList from './components/card-list';
-import SearchBox from './components/search-box';
+import Home from './Pages/Home';
 
 function App() {
-  const [characters, setCharacters] = useState([]);
-
-  useEffect(() => {
-    getCharactersList(BASE_URL).then((res) => setCharacters(res.results));
-  });
-
-  // const onSearchChange = (event) => {
-  //   const searchFieldString = event.target.value.toLowerCase();
-  //   setSearchField(searchFieldString);
-  // };
   return (
-    <div className="container">
-      <h1>
-        <img alt="main-logo-title" src={`${process.env.PUBLIC_URL}/image/title.png`} />
-      </h1>
-      <SearchBox
-        className="search-box"
-        placeholder="Filter by name..."
-        // onSearchHandler={onSearchChange}
-      />
-      <CardList characters={characters} />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
