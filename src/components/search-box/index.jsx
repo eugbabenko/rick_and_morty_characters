@@ -1,9 +1,11 @@
 import './styles.scss';
 
 function SearchBox({ className, placeholder, onSearchHandler, value }) {
+  const defaultValue = value === null ? '' : value;
+
   return (
     <input
-      value={value}
+      value={defaultValue}
       className={className}
       type="search"
       placeholder={placeholder}

@@ -14,17 +14,11 @@ function Pagination({ pageNumber, info, setPageNumber, setSearchParams }) {
 
   return (
     <ReactPaginate
-      className="pagination justify-content-center my-4 gap-4"
       nextLabel="Next"
       forcePage={pageNumber === 1 ? 0 : pageNumber - 1}
       previousLabel="Prev"
-      previousClassName="btn btn-primary fs-5 prev"
-      nextClassName="btn btn-primary fs-5 next"
-      activeClassName="active"
       pageCount={info?.pages}
       onPageChange={pageChange}
-      pageClassName="page-item"
-      pageLinkClassName="page-link"
     />
   );
 }

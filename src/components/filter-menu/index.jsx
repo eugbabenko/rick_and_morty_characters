@@ -1,17 +1,19 @@
 import './styles.scss';
 
-function FilterMenu({ value, onChangeValue, parameters }) {
+function FilterMenu({ onChangeValue, type, parameters, value }) {
+  const defaultValue = value === null ? 'default' : value;
   return (
-    <select value={value} onChange={onChangeValue}>
-      <option disabled selected value>
-        -- select an option --
-      </option>
-      {parameters.map((parameter) => (
-        <option key={parameter} value={parameter}>
-          {parameter}
-        </option>
-      ))}
-    </select>
+    <div>
+      <p>{type}</p>
+      <select value={defaultValue} onChange={onChangeValue}>
+        <option value="default">{`-- choose ${type} --`}</option>
+        {parameters.map((parameter) => (
+          <option key={parameter} value={parameter}>
+            {parameter}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 }
 
