@@ -39,7 +39,7 @@ function HomePage() {
       name: searchFieldString,
     });
   };
-  console.log(searchParams.get('name'));
+
   return (
     <div className="container">
       <h1>
@@ -51,35 +51,37 @@ function HomePage() {
         onSearchHandler={onSearchChange}
         value={searchParams.get('name')}
       />
-      <FilterMenu
-        type="status"
-        parameters={status}
-        value={searchParams.get('status')}
-        onChangeValue={(e) =>
-          setSearchParams((params) => {
-            const newParams = new URLSearchParams(params);
-            newParams.set('status', e.target.value);
-            newParams.set('page', 1);
-            return newParams;
-          })
-        }
-      />
-      <FilterMenu
-        type="gender"
-        parameters={gender}
-        value={searchParams.get('gender')}
-        onChangeValue={(e) =>
-          setSearchParams((params) => {
-            const newParams = new URLSearchParams(params);
-            newParams.set('gender', e.target.value);
-            newParams.set('page', 1);
-            return newParams;
-          })
-        }
-      />
-      <button type="submit" onClick={() => setSearchParams('')}>
-        Clear filters
-      </button>
+      <section>
+        <FilterMenu
+          type="status"
+          parameters={status}
+          value={searchParams.get('status')}
+          onChangeValue={(e) =>
+            setSearchParams((params) => {
+              const newParams = new URLSearchParams(params);
+              newParams.set('status', e.target.value);
+              newParams.set('page', 1);
+              return newParams;
+            })
+          }
+        />
+        <FilterMenu
+          type="gender"
+          parameters={gender}
+          value={searchParams.get('gender')}
+          onChangeValue={(e) =>
+            setSearchParams((params) => {
+              const newParams = new URLSearchParams(params);
+              newParams.set('gender', e.target.value);
+              newParams.set('page', 1);
+              return newParams;
+            })
+          }
+        />
+        <button type="submit" onClick={() => setSearchParams('')}>
+          Clear filters
+        </button>
+      </section>
       <CardList characters={characters} />
       <Pagination
         info={info}

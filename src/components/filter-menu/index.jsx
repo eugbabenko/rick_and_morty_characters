@@ -6,7 +6,7 @@ function FilterMenu({ onChangeValue, type, parameters, value }) {
     <div>
       <p>{type}</p>
       <select value={defaultValue} onChange={onChangeValue}>
-        <option value="default">{`-- choose ${type} --`}</option>
+        <option disabled value="default">{`-- choose ${type} --`}</option>
         {parameters.map((parameter) => (
           <option key={parameter} value={parameter}>
             {parameter}
