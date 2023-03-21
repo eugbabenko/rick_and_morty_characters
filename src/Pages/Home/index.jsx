@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import './styles.scss';
 
-import getCharactersList from '../../API';
+import { getCharactersList } from '../../API';
 import BASE_URL from '../../settings';
 import { status, gender } from '../../components/filter-menu/filter-parameters';
 import CardList from '../../components/card-list';
