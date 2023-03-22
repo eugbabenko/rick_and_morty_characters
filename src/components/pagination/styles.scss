@@ -1,5 +1,5 @@
 .pagination {
-  margin: 25px auto;
+  margin: 60px auto;
   display: flex;
   padding-left: 0;
   list-style: none;
@@ -42,5 +42,11 @@
       margin-top: 0;
       margin-bottom: 1rem;
     }
+  }
+}
+
+@media (max-width: 330px) {
+  .pagination {
+    gap: 4px;
   }
 }

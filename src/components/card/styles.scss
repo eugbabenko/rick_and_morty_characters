@@ -1,11 +1,14 @@
 .card-container {
-  max-width: 240px;
-  flex: 1 0 23%;
+  width: 240px;
   height: 100%;
   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.12),
     0px 2px 4px rgba(0, 0, 0, 0.14);
   border-radius: 4px;
   overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 0 5px #7efd63, 0 0 25px #7efd63, 0 0 50px #7efd63, 0 0 100px #7efd63;
+  }
 
   a {
     color: black;
@@ -43,3 +46,14 @@
     object-fit: cover;
   }
 }
+
+@media (max-width: 825px) {
+  .card-container {
+    height: 308px;
+    width: 312px;
+    img {
+      height: 232px;
+    }
+  }
+}
+

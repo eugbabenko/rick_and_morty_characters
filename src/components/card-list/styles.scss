@@ -1,6 +1,15 @@
 .card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 20px;
+  justify-items: center;
+}
+
+@media (max-width: 690px) {
+  .card-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: flex-start;
+    justify-content: space-evenly;
+  }
 }

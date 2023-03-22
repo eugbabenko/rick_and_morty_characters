@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import './styles.scss';
@@ -12,10 +13,21 @@ function Pagination({ pageNumber, info, setPageNumber, setSearchParams }) {
     });
   };
 
+  const [width, setWidth] = useState(window.innerWidth);
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
   return (
     <ReactPaginate
       className="pagination"
       nextLabel="Next"
+      marginPagesDisplayed={width < 576 ? 1 : 2}
+      pageRangeDisplayed={width < 576 ? 1 : 2}
       forcePage={pageNumber === 1 ? 0 : pageNumber - 1}
       previousLabel="Prev"
       pageCount={info?.pages}
