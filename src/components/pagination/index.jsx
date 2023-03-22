@@ -14,6 +14,7 @@ function Pagination({ pageNumber, info, setPageNumber, setSearchParams }) {
 
   return (
     <ReactPaginate
+      className="pagination"
       nextLabel="Next"
       forcePage={pageNumber === 1 ? 0 : pageNumber - 1}
       previousLabel="Prev"

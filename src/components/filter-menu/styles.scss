@@ -1,0 +1,29 @@
+.filter-couple {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-size: 16px;
+    line-height: 25px;
+  }
+
+  select {
+    width: 140px;
+    font-size: 16px;
+    padding: 5px 0;
+    border: 1px solid #00434e;
+    border-radius: 5px;
+    text-align-last: center;
+    outline: none;
+    margin: 0 15px;
+    background-color: #00b0c8;
+    transition: 0.4s;
+
+    &:hover {
+      box-shadow: 0 0 5px #7efd63, 0 0 25px #7efd63, 0 0 50px #7efd63, 0 0 100px #7efd63;
+      color: #7efd63;
+      border: 1px solid #7efd63;
+    }
+  }
+}

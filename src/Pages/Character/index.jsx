@@ -21,19 +21,41 @@ function CharacterPage() {
   }, [params]);
 
   return (
-    <section>
-      <button type="submit" onClick={() => navigate(-1)}>
+    <section className="container">
+      <button className="btn-go-back" type="submit" onClick={() => navigate(-1)}>
+        <svg
+          className="svg-button"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M16 7H3.83L9.42 1.41L8 0L0 8L8 16L9.41 14.59L3.83 9H16V7Z" fill="black" />
+        </svg>
         Go back
       </button>
-      <img src={character.image} alt={character.name} />
-      <h2>{character.name}</h2>
-      <p>Informations</p>
-      <CharacterInfo title="Gender" text={character.gender} />
-      <CharacterInfo title="Status" text={character.status} />
-      <CharacterInfo title="Specie" text={character.species} />
-      <CharacterInfo title="Location" text={character.location?.name} />
-      <CharacterInfo title="Origin" text={character.origin?.name} />
-      <CharacterInfo title="Type" text={character.type} />
+      <div className="character-data">
+        <img src={character.image} alt={character.name} />
+        <h2>{character.name}</h2>
+        <p>Informations</p>
+      </div>
+      <div className="character-info">
+        <CharacterInfo className="character-info-row" title="Gender" text={character.gender} />
+        <CharacterInfo className="character-info-row" title="Status" text={character.status} />
+        <CharacterInfo className="character-info-row" title="Specie" text={character.species} />
+        <CharacterInfo
+          className="character-info-row"
+          title="Location"
+          text={character.location?.name}
+        />
+        <CharacterInfo
+          className="character-info-row"
+          title="Origin"
+          text={character.origin?.name}
+        />
+        <CharacterInfo className="character-info-row" title="Type" text={character.type} />
+      </div>
     </section>
   );
 }

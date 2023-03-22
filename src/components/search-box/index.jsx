@@ -6,6 +6,7 @@ function SearchBox({ className, placeholder, onSearchHandler, value }) {
   return (
     <>
       <svg
+        className="svg-search-box"
         width="24"
         height="24"
         viewBox="0 0 24 24"

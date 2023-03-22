@@ -41,55 +41,57 @@ function HomePage() {
   };
 
   return (
-    <div className="container">
-      <h1>
-        <img alt="main-logo-title" src={`${process.env.PUBLIC_URL}/image/title.png`} />
-      </h1>
-      <SearchBox
-        className="search-box"
-        placeholder="Filter by name..."
-        onSearchHandler={onSearchChange}
-        value={searchParams.get('name')}
-      />
-      <section>
-        <FilterMenu
-          type="status"
-          parameters={status}
-          value={searchParams.get('status')}
-          onChangeValue={(e) =>
-            setSearchParams((params) => {
-              const newParams = new URLSearchParams(params);
-              newParams.set('status', e.target.value);
-              newParams.set('page', 1);
-              return newParams;
-            })
-          }
+    <main className="container">
+      <div className="home">
+        <h1>
+          <img alt="main-logo-title" src={`${process.env.PUBLIC_URL}/image/title.png`} />
+        </h1>
+        <SearchBox
+          className="search-box"
+          placeholder="Filter by name..."
+          onSearchHandler={onSearchChange}
+          value={searchParams.get('name')}
         />
-        <FilterMenu
-          type="gender"
-          parameters={gender}
-          value={searchParams.get('gender')}
-          onChangeValue={(e) =>
-            setSearchParams((params) => {
-              const newParams = new URLSearchParams(params);
-              newParams.set('gender', e.target.value);
-              newParams.set('page', 1);
-              return newParams;
-            })
-          }
+        <section className="filter-group">
+          <FilterMenu
+            type="status"
+            parameters={status}
+            value={searchParams.get('status')}
+            onChangeValue={(e) =>
+              setSearchParams((params) => {
+                const newParams = new URLSearchParams(params);
+                newParams.set('status', e.target.value);
+                newParams.set('page', 1);
+                return newParams;
+              })
+            }
+          />
+          <FilterMenu
+            type="gender"
+            parameters={gender}
+            value={searchParams.get('gender')}
+            onChangeValue={(e) =>
+              setSearchParams((params) => {
+                const newParams = new URLSearchParams(params);
+                newParams.set('gender', e.target.value);
+                newParams.set('page', 1);
+                return newParams;
+              })
+            }
+          />
+          <button type="submit" onClick={() => setSearchParams('')}>
+            Clear filters
+          </button>
+        </section>
+        <CardList characters={characters} />
+        <Pagination
+          info={info}
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          setSearchParams={setSearchParams}
         />
-        <button type="submit" onClick={() => setSearchParams('')}>
-          Clear filters
-        </button>
-      </section>
-      <CardList characters={characters} />
-      <Pagination
-        info={info}
-        pageNumber={pageNumber}
-        setPageNumber={setPageNumber}
-        setSearchParams={setSearchParams}
-      />
-    </div>
+      </div>
+    </main>
   );
 }
 
