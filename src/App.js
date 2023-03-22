@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import './App.scss';
 
@@ -8,12 +8,12 @@ import Character from './Pages/Character';
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path=":id" element={<Character />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
