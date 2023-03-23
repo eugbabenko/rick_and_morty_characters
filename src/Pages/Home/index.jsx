@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import './styles.scss';
@@ -10,13 +10,18 @@ import Pagination from '../../components/pagination';
 import { getCharactersList } from '../../API';
 import BASE_URL from '../../settings';
 import { status, gender } from '../../components/filter-menu/filter-parameters';
+import useDebounce from '../../hooks/useDebounce';
 
 function HomePage() {
   const [characters, setCharacters] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [name, setName] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const debouncedSearch = useDebounce(name, 500);
 
   useEffect(() => {
+    setIsLoading(true);
     getCharactersList(BASE_URL, searchParams)
       .then((res) => {
         if (res.error) {
@@ -25,12 +30,59 @@ function HomePage() {
         } else {
           setCharacters({
             ...res,
-            results: res.results.sort((a, b) => a.name.localeCompare(b.name)),
+            results: res.results.sort((a, b) =>
+              a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+            ),
           });
         }
       })
-      .catch((err) => alert(err));
+      .catch((err) => alert(err))
+      .finally(() => setIsLoading(false));
   }, [searchParams]);
+
+  useEffect(() => {
+    setSearchParams((params) => {
+      const newParams = new URLSearchParams(params);
+      newParams.set('name', name);
+      newParams.set('page', 1);
+      return newParams;
+    });
+  }, [debouncedSearch]);
+
+  const handleClearQueryString = useCallback(() => {
+    setSearchParams('');
+    setName('');
+    setPageNumber(1);
+  }, []);
+
+  const handleSearch = useCallback((event) => {
+    const searchFieldString = event.target.value.toLowerCase();
+    setName(searchFieldString);
+  }, []);
+
+  const handleStatusChange = useCallback(
+    (event) => {
+      setSearchParams((params) => {
+        const newParams = new URLSearchParams(params);
+        newParams.set('status', event.target.value);
+        newParams.set('page', 1);
+        return newParams;
+      });
+    },
+    [setSearchParams]
+  );
+
+  const handleGenderChange = useCallback(
+    (event) => {
+      setSearchParams((params) => {
+        const newParams = new URLSearchParams(params);
+        newParams.set('gender', event.target.value);
+        newParams.set('page', 1);
+        return newParams;
+      });
+    },
+    [setSearchParams]
+  );
 
   return (
     <main className="container">
@@ -41,51 +93,33 @@ function HomePage() {
         <SearchBox
           className="search-box"
           placeholder="Filter by name..."
-          onSearchHandler={(event) =>
-            setSearchParams({
-              name: event.target.value.toLowerCase(),
-            })
-          }
-          value={searchParams.get('name')}
+          onSearchHandler={handleSearch}
+          value={name}
         />
         <section className="filter-group">
           <FilterMenu
             type="status"
             parameters={status}
             value={searchParams.get('status')}
-            onChangeValue={(e) =>
-              setSearchParams((params) => {
-                const newParams = new URLSearchParams(params);
-                newParams.set('status', e.target.value);
-                newParams.set('page', 1);
-                return newParams;
-              })
-            }
+            onChangeValue={handleStatusChange}
           />
           <FilterMenu
             type="gender"
             parameters={gender}
             value={searchParams.get('gender')}
-            onChangeValue={(e) =>
-              setSearchParams((params) => {
-                const newParams = new URLSearchParams(params);
-                newParams.set('gender', e.target.value);
-                newParams.set('page', 1);
-                return newParams;
-              })
-            }
+            onChangeValue={handleGenderChange}
           />
-          <button
-            type="submit"
-            onClick={() => {
-              setSearchParams('');
-              setPageNumber(1);
-            }}
-          >
+          <button type="submit" onClick={handleClearQueryString}>
             Clear filters
           </button>
         </section>
-        <CardList characters={characters && characters.results} />
+        {isLoading ? (
+          <div className="loader">
+            <p>Loading</p>
+          </div>
+        ) : (
+          <CardList characters={characters && characters.results} />
+        )}
         <Pagination
           info={characters && characters.info}
           pageNumber={pageNumber}
