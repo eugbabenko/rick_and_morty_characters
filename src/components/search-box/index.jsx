@@ -1,7 +1,8 @@
+import { useMemo } from 'react';
 import './styles.scss';
 
 function SearchBox({ className, placeholder, onSearchHandler, value }) {
-  const defaultValue = value === null ? '' : value;
+  const defaultValue = useMemo(() => (value === null ? '' : value), [value]);
 
   return (
     <>

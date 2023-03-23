@@ -1,22 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import ReactPaginate from 'react-paginate';
 
 import './styles.scss';
 
 function Pagination({ pageNumber, info, setPageNumber, setSearchParams }) {
-  const pageChange = (data) => {
-    setPageNumber(data.selected + 1);
-    setSearchParams((searchParams) => {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set('page', data.selected + 1);
-      return newParams;
-    });
-  };
-
   const [width, setWidth] = useState(window.innerWidth);
+
+  const pageChange = useCallback(
+    (data) => {
+      setPageNumber(data.selected + 1);
+      setSearchParams((searchParams) => {
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('page', data.selected + 1);
+        return newParams;
+      });
+    },
+    [setPageNumber, setSearchParams]
+  );
+
   const updateDimensions = () => {
     setWidth(window.innerWidth);
   };
+
   useEffect(() => {
     window.addEventListener('resize', updateDimensions);
     return () => window.removeEventListener('resize', updateDimensions);

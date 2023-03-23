@@ -1,7 +1,9 @@
+import { useMemo } from 'react';
 import './styles.scss';
 
 function FilterMenu({ onChangeValue, type, parameters, value }) {
-  const defaultValue = value === null ? 'default' : value;
+  const defaultValue = useMemo(() => value ?? 'default', [value]);
+
   return (
     <div className="filter-couple">
       <p>{type}</p>

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
-import CharacterInfo from '../character-info';
+
 import './styles.scss';
+
+import CharacterInfo from '../character-info';
 
 function Card({ character }) {
   const { name, species, image, id } = character;

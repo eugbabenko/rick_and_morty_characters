@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+
 import './styles.scss';
+
+import CharacterInfo from '../../components/character-info';
+
 import BASE_URL from '../../settings';
 import { getCharacterByID } from '../../API';
-import CharacterInfo from '../../components/character-info';
 
 function CharacterPage() {
   const [character, setCharacter] = useState('');

@@ -1,7 +1,7 @@
-import './styles.scss';
+import { useMemo } from 'react';
 
 function CharacterInfo({ title, text, className }) {
-  const checkedText = text || 'unknown';
+  const checkedText = useMemo(() => text || 'unknown', [text]);
 
   return (
     <div className={className}>

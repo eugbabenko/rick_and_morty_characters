@@ -3,42 +3,34 @@ import { useSearchParams } from 'react-router-dom';
 
 import './styles.scss';
 
+import SearchBox from '../../components/search-box';
+import FilterMenu from '../../components/filter-menu';
+import CardList from '../../components/card-list';
+import Pagination from '../../components/pagination';
 import { getCharactersList } from '../../API';
 import BASE_URL from '../../settings';
 import { status, gender } from '../../components/filter-menu/filter-parameters';
-import CardList from '../../components/card-list';
-import SearchBox from '../../components/search-box';
-import Pagination from '../../components/pagination';
-import FilterMenu from '../../components/filter-menu';
 
 function HomePage() {
-  const [dataFromServer, setDataFromServer] = useState([]);
-  const [characters, setCharacters] = useState([]);
+  const [characters, setCharacters] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [pageNumber, setPageNumber] = useState(1);
-  const { info, results } = dataFromServer;
 
   useEffect(() => {
     getCharactersList(BASE_URL, searchParams)
       .then((res) => {
         if (res.error) {
           setCharacters([]);
-          setDataFromServer([]);
           console.log(res.error);
         } else {
-          setDataFromServer(res);
-          setCharacters(res.results.sort((a, b) => a.name.localeCompare(b.name)));
+          setCharacters({
+            ...res,
+            results: res.results.sort((a, b) => a.name.localeCompare(b.name)),
+          });
         }
       })
       .catch((err) => alert(err));
   }, [searchParams]);
-
-  const onSearchChange = (event) => {
-    const searchFieldString = event.target.value.toLowerCase();
-    setSearchParams({
-      name: searchFieldString,
-    });
-  };
 
   return (
     <main className="container">
@@ -49,7 +41,11 @@ function HomePage() {
         <SearchBox
           className="search-box"
           placeholder="Filter by name..."
-          onSearchHandler={onSearchChange}
+          onSearchHandler={(event) =>
+            setSearchParams({
+              name: event.target.value.toLowerCase(),
+            })
+          }
           value={searchParams.get('name')}
         />
         <section className="filter-group">
@@ -79,13 +75,19 @@ function HomePage() {
               })
             }
           />
-          <button type="submit" onClick={() => setSearchParams('')}>
+          <button
+            type="submit"
+            onClick={() => {
+              setSearchParams('');
+              setPageNumber(1);
+            }}
+          >
             Clear filters
           </button>
         </section>
-        <CardList characters={characters} />
+        <CardList characters={characters && characters.results} />
         <Pagination
-          info={info}
+          info={characters && characters.info}
           pageNumber={pageNumber}
           setPageNumber={setPageNumber}
           setSearchParams={setSearchParams}
