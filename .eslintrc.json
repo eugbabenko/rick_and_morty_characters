@@ -23,7 +23,7 @@
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "comma-dangle": ["error", "only-multiline"],
     "react/prop-types": "off",
     "react/display-name": "off",
@@ -32,6 +32,8 @@
     "react/react-in-jsx-scope": "off",
     "no-unused-vars": "warn",
     "import/no-extraneous-dependencies": "off",
+    "no-console": "off",
+    "no-alert": "off",
     "object-curly-newline": [
       "error",
       {

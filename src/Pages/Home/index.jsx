@@ -7,10 +7,11 @@ import SearchBox from '../../components/search-box';
 import FilterMenu from '../../components/filter-menu';
 import CardList from '../../components/card-list';
 import Pagination from '../../components/pagination';
-import { getCharactersList } from '../../API';
-import { status, gender } from '../../components/filter-menu/filter-parameters';
 import useDebounce from '../../hooks/useDebounce';
 import Login from '../../components/Login';
+
+import { getCharactersList } from '../../API';
+import { status, gender } from '../../components/filter-menu/filter-parameters';
 
 function HomePage() {
   const [characters, setCharacters] = useState(null);

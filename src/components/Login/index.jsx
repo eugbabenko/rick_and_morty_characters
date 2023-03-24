@@ -10,7 +10,7 @@ import Profile from './profile';
 function Login() {
   const { isLoading, error } = useAuth0();
 
-  const loader = useMemo(() => {
+  const userInfo = useMemo(() => {
     if (error) {
       return <p>Authentication error</p>;
     }
@@ -26,7 +26,7 @@ function Login() {
     );
   }, [error, isLoading]);
 
-  return <section className="login">{loader}</section>;
+  return <section className="login">{userInfo}</section>;
 }
 
 export default Login;
