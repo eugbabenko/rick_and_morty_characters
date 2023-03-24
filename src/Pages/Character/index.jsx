@@ -5,16 +5,15 @@ import './styles.scss';
 
 import CharacterInfo from '../../components/character-info';
 
-import BASE_URL from '../../settings';
 import { getCharacterByID } from '../../API';
 
 function CharacterPage() {
-  const [character, setCharacter] = useState('');
+  const [character, setCharacter] = useState(null);
   const params = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getCharacterByID(BASE_URL, params.id)
+    getCharacterByID(params.id)
       .then((res) => {
         setCharacter(res);
       })
@@ -23,7 +22,9 @@ function CharacterPage() {
       });
   }, [params]);
 
-  return (
+  return character === null ? (
+    <div className="character-data empty-page">There is any character, please wait</div>
+  ) : (
     <section className="container">
       <button className="btn-go-back" type="submit" onClick={() => navigate(-1)}>
         <svg

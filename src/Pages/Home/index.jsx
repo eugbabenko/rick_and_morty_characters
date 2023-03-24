@@ -8,9 +8,9 @@ import FilterMenu from '../../components/filter-menu';
 import CardList from '../../components/card-list';
 import Pagination from '../../components/pagination';
 import { getCharactersList } from '../../API';
-import BASE_URL from '../../settings';
 import { status, gender } from '../../components/filter-menu/filter-parameters';
 import useDebounce from '../../hooks/useDebounce';
+import Login from '../../components/Login';
 
 function HomePage() {
   const [characters, setCharacters] = useState(null);
@@ -22,7 +22,7 @@ function HomePage() {
 
   useEffect(() => {
     setIsLoading(true);
-    getCharactersList(BASE_URL, searchParams)
+    getCharactersList(searchParams)
       .then((res) => {
         if (res.error) {
           setCharacters([]);
@@ -87,6 +87,7 @@ function HomePage() {
   return (
     <main className="container">
       <div className="home">
+        <Login />
         <h1>
           <img alt="main-logo-title" src={`${process.env.PUBLIC_URL}/image/title.png`} />
         </h1>

@@ -6,7 +6,7 @@ import './styles.scss';
 function Pagination({ pageNumber, info, setPageNumber, setSearchParams }) {
   const [width, setWidth] = useState(window.innerWidth);
 
-  const pageChange = useCallback(
+  const changePage = useCallback(
     (data) => {
       setPageNumber(data.selected + 1);
       setSearchParams((searchParams) => {
@@ -29,14 +29,14 @@ function Pagination({ pageNumber, info, setPageNumber, setSearchParams }) {
 
   return (
     <ReactPaginate
-      className="pagination"
+      className={info ? 'pagination' : 'empty-pagination'}
       nextLabel="Next"
       marginPagesDisplayed={width < 576 ? 1 : 2}
       pageRangeDisplayed={width < 576 ? 1 : 2}
       forcePage={pageNumber === 1 ? 0 : pageNumber - 1}
       previousLabel="Prev"
-      pageCount={info?.pages}
-      onPageChange={pageChange}
+      pageCount={info?.pages ?? 1}
+      onPageChange={changePage}
     />
   );
 }

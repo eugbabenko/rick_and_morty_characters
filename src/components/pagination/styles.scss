@@ -45,6 +45,10 @@
   }
 }
 
+.empty-pagination {
+  display: none;
+}
+
 @media (max-width: 330px) {
   .pagination {
     gap: 4px;
