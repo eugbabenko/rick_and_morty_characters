@@ -12,8 +12,8 @@ Once the app is running, you can search for characters by name or browse through
 
 To run the app locally, follow these steps:
 
-Clone this repository using git clone https://github.com/eugbabenko/rick_and_morty_characters.git
-Navigate to the project directory: cd rick_and_morty_characters
-Install the required dependencies: yarn install
-Run the application: yarn start
-Open http://localhost:3000 to view the application in the browser.
+    Clone this repository using git clone https://github.com/eugbabenko/rick_and_morty_characters.git
+    Navigate to the project directory: cd rick_and_morty_characters
+    Install the required dependencies: yarn install
+    Run the application: yarn start
+    Open http://localhost:3000 to view the application in the browser.
