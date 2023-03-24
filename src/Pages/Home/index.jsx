@@ -7,7 +7,6 @@ import SearchBox from '../../components/search-box';
 import FilterMenu from '../../components/filter-menu';
 import CardList from '../../components/card-list';
 import Pagination from '../../components/pagination';
-import useDebounce from '../../hooks/useDebounce';
 import Login from '../../components/Login';
 
 import { getCharactersList } from '../../API';
@@ -16,10 +15,8 @@ import { status, gender } from '../../components/filter-menu/filter-parameters';
 function HomePage() {
   const [characters, setCharacters] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [name, setName] = useState('');
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const debouncedSearch = useDebounce(name, 500);
 
   useEffect(() => {
     setIsLoading(true);
@@ -41,25 +38,22 @@ function HomePage() {
       .finally(() => setIsLoading(false));
   }, [searchParams]);
 
-  useEffect(() => {
-    setSearchParams((params) => {
-      const newParams = new URLSearchParams(params);
-      newParams.set('name', name);
-      newParams.set('page', 1);
-      return newParams;
-    });
-  }, [debouncedSearch]);
-
   const handleClearQueryString = useCallback(() => {
     setSearchParams('');
-    setName('');
     setPageNumber(1);
   }, []);
 
-  const handleSearch = useCallback((event) => {
-    const searchFieldString = event.target.value.toLowerCase();
-    setName(searchFieldString);
-  }, []);
+  const handleSearch = useCallback(
+    (event) => {
+      setSearchParams((params) => {
+        const newParams = new URLSearchParams(params);
+        newParams.set('name', event.target.value.toLowerCase());
+        newParams.set('page', 1);
+        return newParams;
+      });
+    },
+    [setSearchParams]
+  );
 
   const handleStatusChange = useCallback(
     (event) => {
@@ -96,7 +90,7 @@ function HomePage() {
           className="search-box"
           placeholder="Filter by name..."
           onSearchHandler={handleSearch}
-          value={name}
+          value={searchParams.get('name')}
         />
         <section className="filter-group">
           <FilterMenu
